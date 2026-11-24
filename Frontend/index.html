@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / DocuGest</title>
+    <link rel="stylesheet" href="/index.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/index.js" defer></script>
+</head>
+
+<body>
+
+    <main class="contenido">
+        <div class="out">
+
+            <div class="top">
+                <div class="logo"></div>
+                <h1>Iniciar Sesión</h1>
+            </div>
+
+            <form id="formularioLogin">
+                <div class="formField">
+                   <label for="correo" class="text">Correo:</label>
+                   <input type="email" placeholder="correo" name="correo" class="input" id="correo" required>
+                </div>
+
+                <div class="formField">
+                    <label for="contrasena" class="text">Contraseña:</label>
+                    <input type="password" placeholder="contraseña" name="contrasena" class="input" id="contrasena" required>
+                </div>
+
+                <div class="enlaceRecuperar">
+                    <a href="/recuperar">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div class="enlaceCuenta">
+                    <a href="/registro">¿Aún no tienes una cuenta? <span>Regístrate</span></a>
+                </div>
+
+                <button type="submit" class="btn-iniciar">Continuar</button>
+            </form>
+        </div>
+    </main>
+
+  
+</body>
+
+</html>

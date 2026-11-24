@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <style>
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .tarjeta h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .dato {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .dato:last-child {
+            border-bottom: none;
+        }
+
+        .dato span:first-child {
+            color: #64748b;
+        }
+
+        .dato span:last-child {
+            color: #1e293b;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .etiqueta {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #475569;
+            font-size: 0.85rem;
+        }
+
+        .campo {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        #mensajePerfil {
+            display: none;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        #avisoCambio {
+            display: none;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+    </style>
+    <script src="/js/perfil.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-item" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-item" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-item" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-item" data-seccion="empleados">Expedientes Laborales</a>
+                <a href="/perfil" class="menu-activo" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-item" data-seccion="usuarios">Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1>Perfil</h1>
+                <div class="usuario"><span id="saludoHeader">Bienvenido</span></div>
+            </header>
+
+            <section class="body-contenido">
+                <div id="avisoCambio">
+                    Tu contraseña fue asignada por un administrador. Por seguridad, cámbiala ahora.
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+
+                    <div class="tarjeta">
+                        <h3>Información de la cuenta</h3>
+                        <div class="dato"><span>Nombre</span><span id="perfilNombre">—</span></div>
+                        <div class="dato"><span>Correo</span><span id="perfilCorreo">—</span></div>
+                        <div class="dato"><span>Rol</span><span id="perfilRol">—</span></div>
+                        <div class="dato"><span>Empresa</span><span id="perfilEmpresa">—</span></div>
+                        <div class="dato"><span>Cuenta creada</span><span id="perfilCreada">—</span></div>
+                        <div class="dato" id="filaPermisos" style="display: none;">
+                            <span>Mis permisos</span><span id="perfilPermisos" style="max-width: 60%;">—</span>
+                        </div>
+                    </div>
+
+                    <div class="tarjeta">
+                        <h3>Cambiar contraseña</h3>
+                        <form id="formPassword" style="display: flex; flex-direction: column; gap: 15px;" novalidate>
+                            <div>
+                                <label class="etiqueta" for="passActual">Contraseña actual</label>
+                                <input type="password" id="passActual" class="campo" autocomplete="current-password">
+                            </div>
+                            <div>
+                                <label class="etiqueta" for="passNueva">Nueva contraseña (mínimo 8 caracteres)</label>
+                                <input type="password" id="passNueva" class="campo" autocomplete="new-password">
+                            </div>
+                            <div>
+                                <label class="etiqueta" for="passConfirmar">Confirmar nueva contraseña</label>
+                                <input type="password" id="passConfirmar" class="campo" autocomplete="new-password">
+                            </div>
+
+                            <div id="mensajePerfil"></div>
+
+                            <div style="text-align: right;">
+                                <button type="submit" id="btnCambiarPass"
+                                    style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Actualizar
+                                    contraseña</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>

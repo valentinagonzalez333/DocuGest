@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios y Permisos / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <style>
+        .campo {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .etiqueta {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #475569;
+            font-size: 0.85rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .titulo-permisos {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+    </style>
+    <script src="/js/contrato.js" defer></script>
+    <script src="/js/usuarios.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-item" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-item" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-item" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-item" data-seccion="empleados">Expedientes Laborales</a>
+                <a href="/perfil" class="menu-item" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-activo" data-seccion="usuarios">Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1>Usuarios y Permisos</h1>
+                <div class="usuario"><span id="saludoHeader">Bienvenido</span></div>
+            </header>
+
+            <section class="body-contenido">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2>Control de Accesos Corporativos</h2>
+                        <p style="color: #64748b; font-size: 0.9rem;">Gestiona los permisos y roles de los colaboradores
+                            registrados en tu empresa.</p>
+                    </div>
+                    <button id="btnAbrirModalUsuario"
+                        style="background: #0ea5e9; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600;">+
+                        Nuevo Usuario</button>
+                </div>
+
+
+
+                <div
+                    style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 20px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="background: #1e293b; color: white;">
+                                <th style="padding: 12px 15px;">Nombre</th>
+                                <th style="padding: 12px 15px;">Correo Electrónico</th>
+                                <th style="padding: 12px 15px;">Rol Actual / Permisos</th>
+                                <th style="padding: 12px 15px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaUsuariosBody">
+                            <tr>
+                                <td colspan="4" style="padding: 30px; text-align: center; color: #64748b;">Cargando
+                                    usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div id="modalUsuarioContainer"
+                    style="display: none; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 2px solid #0ea5e9;">
+                    <h3 id="modalTitulo" style="margin-bottom: 5px; color: #1e293b;">Registrar Nuevo Usuario y Permisos
+                    </h3>
+                    <p id="indicadorPaso" style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;"></p>
+
+                    <form id="formCrearUsuario" style="display: flex; flex-direction: column; gap: 15px;" novalidate>
+                        <input type="hidden" id="usuarioEditandoId">
+
+
+                        <div id="pasoUsuario" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div class="grid-2">
+                                <div>
+                                    <label class="etiqueta">Nombre Completo:</label>
+                                    <input type="text" id="nombreNuevo" class="campo" required>
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Correo Electrónico:</label>
+                                    <input type="email" id="correoNuevo" class="campo" required>
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div>
+                                    <label class="etiqueta">Contraseña:</label>
+                                    <input type="text" id="passwordEstatico" value="********" readonly disabled
+                                        class="campo"
+                                        style="background: #f1f5f9; color: #64748b; cursor: not-allowed; display: none;">
+                                    <input type="password" id="passwordNuevo" class="campo" required minlength="8"
+                                        placeholder="Contraseña inicial (mín. 8 caracteres)">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Rol Principal:</label>
+                                    <select id="rolNuevo" class="campo">
+                                        <option value="usuario_personalizado">Personalizado</option>
+                                        <option value="admin_empresa">Administrador de Empresa</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div
+                                style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                    <label><input type="checkbox" name="permisoDoc" value="leer"> Leer</label>
+                                    <label><input type="checkbox" name="permisoDoc" value="crear"> Crear</label>
+                                    <label><input type="checkbox" name="permisoDoc" value="editar"> Editar</label>
+                                    <label><input type="checkbox" name="permisoDoc" value="archivar"> Archivar</label>
+                                    <label><input type="checkbox" name="permisoDoc" value="anular"> Anular</label>
+                                    <label><input type="checkbox" name="permisoDoc" value="descargar">
+                                        Descargar</label>
+                                </div>
+
+                                <label class="titulo-permisos" style="margin-top: 12px;">Permisos en Módulo de
+                                    Compromisos:</label>
+                                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                    <label><input type="checkbox" name="permisoComp" value="leer"> Leer</label>
+                                    <label><input type="checkbox" name="permisoComp" value="crear"> Crear</label>
+                                    <label><input type="checkbox" name="permisoComp" value="editar"> Editar</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="pasoExpediente"
+                            style="display: none; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                            <label class="titulo-permisos" style="margin-bottom: 12px;">Expediente laboral</label>
+                            <div class="grid-2">
+                                <div>
+                                    <label class="etiqueta">Nombres</label>
+                                    <input id="exp_nombres" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Apellidos</label>
+                                    <input id="exp_apellidos" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Documento de identidad</label>
+                                    <input id="exp_documentoIdentidad" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Cargo (según el rol)</label>
+                                    <input id="exp_cargo" class="campo" readonly
+                                        style="background: #f1f5f9; color: #64748b; cursor: not-allowed;">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Área / Departamento</label>
+                                    <input id="exp_departamento" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Fecha de ingreso</label>
+                                    <input id="exp_fechaIngreso" type="date" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Tipo de contrato</label>
+                                    <select id="exp_tipoContrato" class="campo">
+                                        <option value="">— Sin definir —</option>
+                                        <option value="indefinido">Término indefinido</option>
+                                        <option value="fijo">Término fijo</option>
+                                        <option value="prestacion_servicios">Prestación de servicios</option>
+                                        <option value="obra_labor">Obra o labor</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="etiqueta" id="lbl_fin">Contrato hasta</label>
+                                    <input id="exp_fechaFinContrato" type="date" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Salario</label>
+                                    <input id="exp_salario" type="number" min="0" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Estado</label>
+                                    <select id="exp_estado" class="campo">
+                                        <option value="activo">Activo</option>
+                                        <option value="candidato">Candidato</option>
+                                        <option value="vacaciones">Vacaciones</option>
+                                        <option value="suspendido">Suspendido</option>
+                                        <option value="retirado">Retirado</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Teléfono</label>
+                                    <input id="exp_telefono" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Dirección de residencia</label>
+                                    <input id="exp_direccion" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Ciudad</label>
+                                    <input id="exp_ciudad" class="campo">
+                                </div>
+                                <div>
+                                    <label class="etiqueta">Contacto de emergencia</label>
+                                    <input id="exp_contactoEmergencia" class="campo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button type="button" id="btnCancelarModal"
+                                style="background: #94a3b8; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                            <button type="button" id="btnAtras"
+                                style="display: none; background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Atrás</button>
+                            <button type="button" id="btnSiguiente"
+                                style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Siguiente</button>
+                            <button type="submit" id="btnGuardarFormUsuario"
+                                style="display: none; background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Guardar
+                                Usuario</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

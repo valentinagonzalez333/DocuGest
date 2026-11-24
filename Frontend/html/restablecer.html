@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Nueva contraseña / DocuGets</title>
+    <link rel="stylesheet" href="/index.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/restablecer.js" defer></script>
+</head>
+
+<body>
+
+    <main class="contenido">
+        <div class="out">
+
+            <div class="top">
+                <div class="logo"></div>
+                <h1>Nueva contraseña</h1>
+                <p class="top-texto">Elige una contraseña de al menos 8 caracteres.</p>
+            </div>
+
+            <form id="formularioRestablecer">
+                <div class="formField">
+                    <label for="passNueva" class="text">Nueva contraseña:</label>
+                    <input type="password" placeholder="Mínimo 8 caracteres" class="input" id="passNueva" required minlength="8" autocomplete="new-password">
+                </div>
+
+                <div class="formField">
+                    <label for="passConfirmar" class="text">Confirmar contraseña:</label>
+                    <input type="password" placeholder="Repite tu contraseña" class="input" id="passConfirmar" required autocomplete="new-password">
+                </div>
+
+                <div class="enlaceCuenta">
+                    <a href="/">Volver a <span>iniciar sesión</span></a>
+                </div>
+
+                <button type="submit" class="btn-iniciar">Guardar contraseña</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

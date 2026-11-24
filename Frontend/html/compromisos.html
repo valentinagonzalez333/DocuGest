@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compromisos & Actas / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <script src="/js/compromisos.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-item" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-item" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-activo" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-item" data-seccion="empleados">Expedientes Laborales</a>
+                <a href="/perfil" class="menu-item" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-item" data-seccion="usuarios">Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1>Actas</h1>
+                <div class="usuario"><span id="saludoHeader">Bienvenido</span></div>
+            </header>
+
+            <section class="body-contenido">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Seguimiento de Acuerdos y Tareas</h2>
+                    <button id="btnAbrirModalCompromiso"
+                        style="background: #0ea5e9; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600;">+
+                        Nueva acta</button>
+                </div>
+
+                <!-- Tabla de actas -->
+                <div
+                    style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 20px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="background: #1e293b; color: white;">
+                                <th style="padding: 12px 15px;">Consecutivo</th>
+                                <th style="padding: 12px 15px;">Título</th>
+                                <th style="padding: 12px 15px;">Área</th>
+                                <th style="padding: 12px 15px;">Creado por</th>
+                                <th style="padding: 12px 15px;">Firmantes</th>
+                                <th style="padding: 12px 15px;">Fecha límite</th>
+                                <th style="padding: 12px 15px;">Estado</th>
+                                <th style="padding: 12px 15px;">Archivos</th>
+                                <th style="padding: 12px 15px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCompromisosBody"></tbody>
+                    </table>
+                </div>
+
+               
+                <div id="formCompromisoContainer"
+                    style="display: none; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 2px solid #0ea5e9;">
+                    <h3 id="tituloFormCompromiso" style="margin-bottom: 15px; color: #1e293b;">Registrar Nueva Acta
+                    </h3>
+
+                    <form id="compromisoForm" style="display: flex; flex-direction: column; gap: 15px;"
+                        enctype="multipart/form-data">
+                        <input type="hidden" id="compromisoIdEdicion" value="">
+
+                        <div id="camposCreacion" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <input type="text" id="tituloActa" required placeholder="Título del acta"
+                                    style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                <input type="text" id="areaActa" required placeholder="Área responsable"
+                                    style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                            </div>
+                            <input type="text" id="firmantesActa" placeholder="Firmantes (separados por coma)"
+                                style="padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; color: #475569;">Fecha límite:</label>
+                                <input type="date" id="fechaLimite" required
+                                    style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                            </div>
+                            <input type="file" id="archivosActa" multiple
+                                style="padding: 8px; border: 1px dashed #cbd5e1; border-radius: 6px; background: #f8fafc;">
+                            <div id="archivosActualesActa"></div>
+                        </div>
+
+                        <div id="campoEstado" style="display: none;">
+                            <label style="display: block; margin-bottom: 5px; color: #475569;">Estado:</label>
+                            <select id="estadoCompromiso"
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en_proceso">En proceso</option>
+                                <option value="completado">Completado</option>
+                            </select>
+                            <small id="notaEstado"
+                                style="display: none; margin-top: 5px; color: #b91c1c; font-size: 0.8rem;">Esta acta
+                                está vencida: puedes marcarla como completada o ampliar la fecha límite.</small>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button type="button" id="btnCancelarCompromiso"
+                                style="background: #94a3b8; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                            <button type="submit"
+                                style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

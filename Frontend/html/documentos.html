@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Documental / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <script src="/js/documentos.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-item" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-activo" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-item" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-item" data-seccion="empleados">Expedientes Laborales</a>
+                 <a href="/perfil" class="menu-item" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-item" data-seccion="usuarios">Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1 id="tituloSeccion">Gestión Documental</h1>
+                <div class="usuario">
+                    <span id="saludoHeader">Bienvenido</span>
+                </div>
+            </header>
+
+            <section class="body-contenido">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Listado de Documentos Corporativos</h2>
+                    <button id="btnAbrirModal" class="btn-primario"
+                        style="background: #0ea5e9; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600;">+
+                        Nuevo Documento</button>
+                </div>
+
+
+
+
+                <div class="tabla-contenedor"
+                    style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="background: #1e293b; color: white;">
+                                <th style="padding: 12px 15px;">Consecutivo</th>
+                                <th style="padding: 12px 15px;">Tipo</th>
+                                <th style="padding: 12px 15px;">Título</th>
+                                <th style="padding: 12px 15px;">Área</th>
+                                <th style="padding: 12px 15px;">Creado Por</th>
+                                <th style="padding: 12px 15px;">Firmantes</th>
+                                <th style="padding: 12px 15px;">Estado</th>
+                                <th style="padding: 12px 15px;">Archivos</th>
+                                <th style="padding: 12px 15px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDocumentosBody">
+                            <tr>
+                                <td colspan="9" style="padding: 20px; text-align: center; color: #64748b;">Cargando
+                                    documentos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+                <div id="formNuevoDocumento"
+                    style="display: none; margin-top: 25px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <h3 id="tituloFormulario" style="margin-bottom: 15px; color: #1e293b;">Registrar Nuevo Documento
+                    </h3>
+
+                    <form id="crearDocForm" style="display: flex; flex-direction: column; gap: 15px;"
+                        enctype="multipart/form-data">
+
+                        <input type="hidden" id="documentoIdEdicion" value="">
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label
+                                    style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Tipo
+                                    de Documento:</label>
+                                <select id="tipoDocumento" required
+                                    style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                    <option value="contrato">Contrato</option>
+                                    <option value="informe">Informe</option>
+                                    <option value="certificado">Certificado</option>
+                                    <option value="visita">Visita</option>
+                                    <option value="memorando" id="optMemorando">Memorando</option>
+                                    <option value="carta">Carta</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label
+                                    style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Área
+                                    Responsable:</label>
+                                <input type="text" id="areaResponsable" required
+                                    style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"
+                                    placeholder="Ej. Recursos Humanos, Legal...">
+                            </div>
+                        </div>
+
+                        
+
+                        <div id="bloqueEmpleadoMemo" style="display: none;">
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Empleado
+                                destinatario del memorando:</label>
+                            <select id="empleadoMemo"
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"></select>
+                        </div>
+
+
+
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Título
+                                del Documento:</label>
+                            <input type="text" id="tituloDoc" required
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"
+                                placeholder="Ej. Acta de Constitución de Proyecto">
+                        </div>
+                        <div>
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Firmantes
+                                / Personas Involucradas:</label>
+                            <input type="text" id="firmantesDoc"
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"
+                                placeholder="Ej. Ing. Carlos Ruiz, Lic. Ana Torres">
+                        </div>
+
+                        <div>
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Descripción
+                                / Observaciones:</label>
+                            <textarea id="descDoc" rows="3"
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"
+                                placeholder="Detalles clave..."></textarea>
+                        </div>
+
+                        <div>
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: 500; color: #475569;">Adjuntar
+                                Archivos:</label>
+                            <input type="file" id="archivosDoc" multiple
+                                style="width: 100%; padding: 8px; border: 1px dashed #cbd5e1; border-radius: 6px; background: #f8fafc;">
+                        </div>
+
+
+                        <div id="archivosActualesEdicion"></div>
+
+                        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
+                            <button type="button" id="btnCancelarDoc"
+                                style="background: #94a3b8; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                            <button type="submit" id="btnGuardarDoc"
+                                style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Guardar
+                                Documento</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div id="modalHistorial"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+                    <div
+                        style="background: white; padding: 25px; border-radius: 10px; width: 650px; max-height: 80vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <h3 id="tituloHistorial" style="margin-bottom: 15px; color: #1e293b;">Historial de Versiones
+                        </h3>
+                        <div id="contenidoHistorial" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                        <div id="pieHistorial" style="margin-top: 15px;"></div>
+                        <div style="text-align: right; margin-top: 20px;">
+                            <button type="button" onclick="cerrarModalHistorial()"
+                                style="background: #64748b; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modalRevision"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+                    <div
+                        style="background: white; padding: 25px; border-radius: 10px; width: 700px; max-height: 85vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <h3 id="tituloRevision" style="margin-bottom: 5px; color: #1e293b;">Revisar cambio propuesto
+                        </h3>
+                        <p id="autorRevision" style="margin-bottom: 15px; color: #475569; font-size: 0.9rem;"></p>
+                        <div id="contenidoRevision"></div>
+                        <textarea id="comentarioRevision" rows="2" placeholder="Comentario (opcional)"
+                            style="width: 100%; margin-top: 15px; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;"></textarea>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;">
+                            <button type="button" onclick="cerrarModalRevision()"
+                                style="background: #94a3b8; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                            <button type="button" id="btnRechazar"
+                                style="background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">Rechazar</button>
+                            <button type="button" id="btnAprobar"
+                                style="background: #22c55e; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600;">Aprobar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>

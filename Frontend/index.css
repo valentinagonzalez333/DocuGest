@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap');
+
+:root {
+    --bg: #f5f4ef;
+    --surface: #fffefc;
+    --surface-2: #f8f7f2;
+    --line: #e6e3da;
+    --ink: #16213a;
+    --ink-2: #4a5470;
+    --ink-3: #8089a0;
+    --navy: #14213d;
+    --navy-2: #22346a;
+    --yellow: #f4b928;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 24px 16px;
+    background:
+        radial-gradient(520px 320px at 88% 6%, rgba(244, 185, 40, .16), transparent 70%),
+        var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+}
+
+.contenido { width: 100%; display: flex; justify-content: center; }
+
+.out {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 48px 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 1px 2px rgba(20, 33, 61, .04), 0 24px 60px rgba(20, 33, 61, .10);
+    overflow: hidden;
+}
+
+.out::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 5px;
+    background: var(--yellow);
+}
+
+.top {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: 14px;
+    background: var(--navy);
+    display: grid;
+    place-items: center;
+}
+
+.logo::before {
+    content: 'D';
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: #fff;
+    line-height: 1;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: 3px solid var(--surface);
+}
+
+.top h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    letter-spacing: -.01em;
+    color: var(--navy);
+}
+
+#formularioLogin,
+#formularioRegistro { width: 100%; }
+
+.formField {
+    width: 100%;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formField .text {
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    margin-bottom: 7px;
+}
+
+.formField input {
+    width: 100%;
+    padding: 12px 16px;
+    outline: none;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    color: var(--ink);
+    font-size: .95rem;
+    transition: border-color .18s, background .18s, box-shadow .18s;
+}
+
+.formField input::placeholder { color: var(--ink-3); }
+
+.formField input:focus {
+    border-color: var(--navy);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(244, 185, 40, .28);
+}
+
+.enlaceRecuperar {
+    width: 100%;
+    text-align: right;
+    margin: -2px 0 16px;
+    font-size: .84rem;
+}
+
+.enlaceCuenta {
+    width: 100%;
+    text-align: center;
+    margin: 6px 0 22px;
+    font-size: .88rem;
+}
+
+.enlaceRecuperar a,
+.enlaceCuenta a {
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color .18s;
+}
+
+.enlaceRecuperar a:hover { color: var(--navy); text-decoration: underline; text-decoration-color: var(--yellow); text-underline-offset: 3px; }
+.enlaceCuenta a:hover { color: var(--navy); }
+
+.enlaceCuenta span {
+    color: var(--navy);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.btn-iniciar,
+.btn-registrar {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: #fff;
+    border: 1px solid var(--navy);
+    border-radius: 12px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .18s, box-shadow .18s;
+}
+
+.btn-iniciar:hover,
+.btn-registrar:hover {
+    background: var(--navy-2);
+    border-color: var(--navy-2);
+    box-shadow: 0 8px 22px rgba(20, 33, 61, .25);
+}
+
+.btn-iniciar:active,
+.btn-registrar:active { background: var(--navy); }
+
+:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+@media (max-width: 520px) {
+    .out { padding: 36px 24px 32px; }
+}

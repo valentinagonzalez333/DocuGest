@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <script src="/js/panel.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-activo" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-item" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-item" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-item" data-seccion="empleados">Expedientes Laborales</a>
+                <a href="/perfil" class="menu-item" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-item" data-seccion="usuarios"> Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1 id="tituloSeccion">Dashboard</h1>
+                <div class="usuario">
+                    <span id="saludoHeader">Bienvenido</span>
+                </div>
+            </header>
+
+            <section class="body-contenido" id="contenidoDinamico">
+            
+                <div class="cards" id="tarjetas">
+                    <a class="card" id="cardPendientes" href="/compromisos" hidden>
+                        <h3>Compromisos pendientes</h3>
+                        <p class="cantidad" id="numPendientes">0</p>
+                        <small>Por iniciar y en proceso</small>
+                    </a>
+
+                    <a class="card" id="cardVencidas" href="/compromisos" hidden>
+                        <h3>Actas vencidas</h3>
+                        <p class="cantidad" id="numVencidas">0</p>
+                        <small>Sin completar y fuera de fecha</small>
+                    </a>
+
+                    <a class="card" id="cardEmpleados" href="/empleados" hidden>
+                        <h3>Empleados activos</h3>
+                        <p class="cantidad" id="numEmpleados">0</p>
+                        <small>Registrados en tu empresa</small>
+                    </a>
+
+                    <a class="card" id="cardExpedientes" href="/empleados" hidden>
+                        <h3>Expedientes laborales</h3>
+                        <p class="cantidad" id="numExpedientes">0</p>
+                        <small>Incluye todos los estados</small>
+                    </a>
+
+                    <a class="card" id="cardContratos" href="/empleados" hidden>
+                        <h3>Contratos por vencer</h3>
+                        <p class="cantidad" id="numContratos">0</p>
+                        <small>En los próximos 30 días</small>
+                    </a>
+
+                    <a class="card" id="cardMemos" href="/empleados" hidden>
+                        <h3 id="tituloMemos">Memorandos sin firmar</h3>
+                        <p class="cantidad" id="numMemos">0</p>
+                        <small id="subMemos">Pendientes de firma</small>
+                    </a>
+                </div>
+
+                <div class="panel-lista" id="panelProximas" hidden>
+                    <div class="panel-lista-cab">
+                        <h2>Actas próximas a vencer</h2>
+                        <a href="/compromisos" class="panel-lista-enlace">Ver todas las actas</a>
+                    </div>
+                    <ul id="listaProximas"></ul>
+                </div>
+
+                <div class="bienvenida">
+                    <h2>¡Bienvenido a tu espacio de trabajo multi-tenant!</h2>
+                    <p>Desde aquí podrás gestionar de forma aislada y segura toda la documentación corporativa,
+                        contratos, actas y expedientes de tu organización.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>

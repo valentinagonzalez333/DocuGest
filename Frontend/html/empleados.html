@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedientes Laborales / DocuGets</title>
+    <link rel="stylesheet" href="/css/panel.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/buscador.js" defer></script>
+    <script src="/js/contrato.js" defer></script>
+    <script src="/js/empleados.js" defer></script>
+</head>
+
+<body class="panel">
+
+    <div class="contenido">
+        <aside class="asid">
+            <div class="docuGet">
+                <h2>DocuGets</h2>
+                <span id="nombreEmpresa" class="empresa">Cargando...</span>
+            </div>
+
+            <nav class="menu">
+                <a href="/panel" class="menu-item" data-seccion="dashboard">Inicio</a>
+                <a href="/documentos" class="menu-item" data-seccion="documentos">Gestión Documental</a>
+                <a href="/compromisos" class="menu-item" data-seccion="compromisos">Compromisos & Actas</a>
+                <a href="/empleados" class="menu-activo" data-seccion="empleados">Expedientes Laborales</a>
+                <a href="/perfil" class="menu-item" data-seccion="perfil">Perfil</a>
+
+                <div id="seccionAdmin" style="display: none;">
+                    <hr class="menu-admi">
+                    <span class="menu-label">Administración</span>
+                    <a href="/usuarios" class="menu-item" data-seccion="usuarios">Usuarios y Permisos</a>
+                </div>
+            </nav>
+
+            <div class="footer">
+                <div class="info">
+                    <strong id="userNombre">Usuario</strong>
+                    <span id="userRol">Rol</span>
+                </div>
+                <button id="btnCerrarSesion" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-contenido">
+            <header class="top">
+                <h1>Expedientes Laborales</h1>
+                <div class="usuario"><span id="saludoHeader">Bienvenido</span></div>
+            </header>
+
+            <section class="body-contenido">
+                <div id="vistaLista"
+                    style="display: none; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="background: #1e293b; color: white;">
+                                <th style="padding: 12px 15px;">Empleado</th>
+                                <th style="padding: 12px 15px;">Cargo</th>
+                                <th style="padding: 12px 15px;">Área</th>
+                                <th style="padding: 12px 15px;">Contrato</th>
+                                <th style="padding: 12px 15px;">Estado</th>
+                                <th style="padding: 12px 15px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaEmpleadosBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="contenedorExpediente"></div>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>

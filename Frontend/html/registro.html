@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regístrate / DocuGest</title>
+    <link rel="stylesheet" href="/index.css">
+    <script src="/js/ui.js" defer></script>
+     <script src="/js/registro.js" defer></script>
+     
+</head>
+
+<body>
+
+    <main class="contenido">
+        <div class="out">
+
+            <div class="top">
+                <div class="logo"></div>
+                <h1>Registra tu empresa</h1>
+            </div>
+
+            <form id="formularioRegistro">
+                <div class="formField">
+                   <label for="nombre" class="text">Nombre:</label>
+                   <input type="text" placeholder="Tu nombre completo" name="nombre" class="input" id="nombre" required>
+                </div>
+
+                <div class="formField">
+                   <label for="nombre-empresa" class="text">Empresa:</label>
+                   <input type="text" placeholder="Nombre de la empresa" name="nombre-empresa" class="input" id="nombre-empresa" required>
+                </div>
+
+                <div class="formField">
+                   <label for="correo" class="text">Correo:</label>
+                   <input type="email" placeholder="correo@empresa.com" name="correo" class="input" id="correo" required>
+                </div>
+
+                <div class="formField">
+                    <label for="contrasena" class="text">Contraseña:</label>
+                    <input type="password" placeholder="Mínimo 8 caracteres" name="contrasena" class="input" id="contrasena" required minlength="8">
+                </div>
+
+                <div class="formField">
+                    <label for="contrasenaConfirmar" class="text">Confirmar contraseña:</label>
+                    <input type="password" placeholder="Repite tu contraseña" name="contrasenaConfirmar" class="input" id="contrasenaConfirmar" required>
+                </div>
+
+                <div class="enlaceCuenta">
+                    <a href="/">¿Ya tienes una cuenta? <span>Inicia sesión</span></a>
+                </div>
+
+                <button type="submit" class="btn-iniciar">Continuar</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
